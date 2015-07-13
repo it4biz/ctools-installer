@@ -678,7 +678,7 @@ installSaikuAdhoc (){
 
 installSaikuChartPlus (){
 	rm -rf $SOLUTION_DIR/system/saiku-chart-plus
-	unzip -o .tmp/saiku-chart-plus*zip -d "$SOLUTION_DIR/system/" > /dev/null
+	unzip -o .tmp/vSaiku3-ChartPlusStable*zip -d "$SOLUTION_DIR/system/" > /dev/null
 }
 
 
