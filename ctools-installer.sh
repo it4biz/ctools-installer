@@ -81,7 +81,7 @@ usage (){
 	echo "-s    Solution path (eg: /biserver/pentaho-solutions)"
 	echo "-w    Pentaho webapp server path (required for cgg on versions before 4.5. eg: /biserver-ce/tomcat/webapps/pentaho)"
 	echo "-b    Branch from where to get ctools, stable for release, dev for trunk. Default is stable"
-	echo "-c    Comma-separated list of CTools to install (Supported module-names: marketplace,cdf,cda,cde,cgg,cfr,sparkl,cdc,cdv,saiku,saikuadhoc)"
+	echo "-c    Comma-separated list of CTools to install (Supported module-names: marketplace,cdf,cda,cde,cgg,cfr,sparkl,cdc,cdv,saiku,saikuadhoc,saikuchartplus)"
 	echo "-y    Assume yes to all prompts"
 	echo "--no-update Skip update of the ctools-installer.sh"
 	echo "-n    Add newline to end of prompts (for integration with CBF)"
@@ -212,8 +212,7 @@ fi
 rm -rf .tmp
 mkdir -p .tmp/dist
 
-wget --no-check-certificate 'https://raw.github.com/it4biz/ctools-installer/master/ctools-installer.sh' -P .tmp -o /dev/null
-# wget --no-check-certificate 'https://raw.github.com/pmalves/ctools-installer/master/ctools-installer.sh' -P .tmp -o /dev/null
+wget --no-check-certificate 'https://raw.github.com/pmalves/ctools-installer/master/ctools-installer.sh' -P .tmp -o /dev/null
 
 if ! diff --strip-trailing-cr $0 .tmp/ctools-installer.sh >/dev/null ; then
   answer=n
@@ -861,19 +860,20 @@ else
 fi
 
 #SAIKU_CHART_PLUS
-if [ $BASERVER_VERSION = '5x' ] || [ "$MODULES" != "" ] ||  $ASSUME_YES; then
-    INSTALL_SAIKU_CHART_PLUS=1
-else
-    echo
-	echo $ECHO_FLAG "Install Saiku Chart Plus? This will delete everything in $SOLUTION_DIR/system/saiku-chart-plus. are you sure? (y/N) "
-	read -e answer < /dev/tty
+if  [ $BASERVER_VERSION = '5x' ]; then
+    if [ "$MODULES" != "" ] ||  $ASSUME_YES; then
+	    INSTALL_SAIKU_CHART_PLUS=1
+    else
+	    echo
+    	echo $ECHO_FLAG "Install Saiku Chart Plus? This will delete everything in $SOLUTION_DIR/system/saiku-chart-plus. you sure? (y/N) "
+	    read -e answer < /dev/tty
 
-	case $answer in
-	    [Yy]* ) INSTALL_SAIKU_CHART_PLUS=1;;
-        * ) ;;
-    esac
+    	case $answer in
+	      [Yy]* ) INSTALL_SAIKU_CHART_PLUS=1;;
+    	  * ) ;;
+	    esac
+    fi
 fi
-
 
 
 nothingToDo (){
