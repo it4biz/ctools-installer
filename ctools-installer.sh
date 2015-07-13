@@ -499,11 +499,11 @@ downloadSaikuChartPlus (){
 		then
 			#URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
 			URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
-			download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-plugin.zip" ".tmp"
+			download_file "SAIKU_CHART_PLUS" "$URL" "vSaiku3-ChartPlusStable.zip" ".tmp"
 		else
 			#URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
 			URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
-			download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-plugin.zip" ".tmp"
+			download_file "SAIKU_CHART_PLUS" "$URL" "vSaiku3-ChartPlusStable.zip" ".tmp"
 		fi
 	else
 		if [ $BRANCH = 'dev' ]
@@ -512,7 +512,7 @@ downloadSaikuChartPlus (){
         fi	    
 	#URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
 	URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
-			download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-plugin.zip" ".tmp"
+			download_file "SAIKU_CHART_PLUS" "$URL" "vSaiku3-ChartPlusStable.zip" ".tmp"
 	fi
 	echo "Done"
 }
