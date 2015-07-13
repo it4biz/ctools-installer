@@ -213,7 +213,7 @@ rm -rf .tmp
 mkdir -p .tmp/dist
 
 wget --no-check-certificate 'https://raw.github.com/it4biz/ctools-installer/master/ctools-installer.sh' -P .tmp -o /dev/null
-#wget --no-check-certificate 'https://raw.github.com/pmalves/ctools-installer/master/ctools-installer.sh' -P .tmp -o /dev/null
+# wget --no-check-certificate 'https://raw.github.com/pmalves/ctools-installer/master/ctools-installer.sh' -P .tmp -o /dev/null
 
 if ! diff --strip-trailing-cr $0 .tmp/ctools-installer.sh >/dev/null ; then
   answer=n
@@ -495,17 +495,26 @@ downloadSaikuAdhoc (){
 
 downloadSaikuChartPlus (){
 	# SaikuChartPlus by IT4biz
-	if [ $BRANCH = 'dev' ]
-	then
-    	echo 'SaikuChartPlus [trunk] not available for download. downloading stable'
-		URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
-		download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-vSaiku3-plugin-pentaho.zip" ".tmp"
+	if [[ "$BASERVER_VERSION" = "5x" ]]; then
+		if [ $BRANCH = 'dev' ]
+		then
+			URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+			download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-plugin.zip" ".tmp"
+		else
+			URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+			download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-plugin.zip" ".tmp"
+		fi
 	else
-		URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
-		download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-vSaiku3-plugin-pentaho.zip" ".tmp"
-    fi
+		if [ $BRANCH = 'dev' ]
+		then
+            echo 'SAIKU [trunk] not available for download. downloading stable'
+        fi	    
+        URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+			download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-plugin.zip" ".tmp"
+	fi
 	echo "Done"
 }
+
 
 # Define install functions
 
