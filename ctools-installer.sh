@@ -492,6 +492,20 @@ downloadSaikuAdhoc (){
 }
 
 
+downloadSaikuChartPlus (){
+	# SaikuChartPlus by IT4biz
+	if [ $BRANCH = 'dev' ]
+	then
+    	echo 'SaikuChartPlus [trunk] not available for download. downloading stable'
+		URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+		download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-vSaiku3-plugin-pentaho.zip" ".tmp"
+	else
+		URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+		download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-vSaiku3-plugin-pentaho.zip" ".tmp"
+    fi
+	echo "Done"
+}
+
 # Define install functions
 
 installSamples() {
@@ -650,6 +664,10 @@ installSaikuAdhoc (){
 	unzip -o .tmp/saiku-adhoc-plugin*zip -d "$SOLUTION_DIR/system/" > /dev/null
 }
 
+installSaikuChartPlus (){
+	rm -rf $SOLUTION_DIR/system/saiku-chart-plus
+	unzip -o .tmp/saiku-chart-plus*zip -d "$SOLUTION_DIR/system/" > /dev/null
+}
 
 
 # read options for stuff to download/install
@@ -665,6 +683,7 @@ INSTALL_CDC=0
 INSTALL_CDV=0
 INSTALL_SAIKU=0
 INSTALL_SAIKU_ADHOC=0
+INSTALL_SAIKU_CHART_PLUS=0
 
 if  [ "$BRANCH" = "dev" ]; then
 	if  [ "$MODULES" != "" ] || $ASSUME_YES; then
@@ -831,6 +850,20 @@ else
     esac
 fi
 
+#SAIKU_CHART_PLUS
+if [ $BASERVER_VERSION = '5x' ] || [ "$MODULES" != "" ] ||  $ASSUME_YES; then
+    INSTALL_SAIKU_CHART_PLUS=1
+else
+    echo
+	echo $ECHO_FLAG "Install Saiku Chart Plus? This will delete everything in $SOLUTION_DIR/system/saiku-chart-plus. are you sure? (y/N) "
+	read -e answer < /dev/tty
+
+	case $answer in
+	    [Yy]* ) INSTALL_SAIKU_CHART_PLUS=1;;
+        * ) ;;
+    esac
+fi
+
 
 
 nothingToDo (){
@@ -851,6 +884,7 @@ if [ "$MODULES" != "" ]; then
   INSTALL_CDV=0
   INSTALL_SAIKU=0
   INSTALL_SAIKU_ADHOC=0
+  INSTALL_SAIKU_CHART_PLUS=0
   MODULES_ARR=$(echo $MODULES | tr "," "\n")
   for MODULE in $MODULES_ARR
   do
@@ -866,13 +900,14 @@ if [ "$MODULES" != "" ]; then
       cdv) INSTALL_CDV=1;;
       saiku) INSTALL_SAIKU=1;;
       saikuadhoc) INSTALL_SAIKU_ADHOC=1;;
+      saikuchartplus) INSTALL_SAIKU_CHART_PLUS=1;;
         * ) ;;
     esac
   done
 fi
 
 
-[ $INSTALL_MARKETPLACE -ne 0 ] || [ $INSTALL_CDF -ne 0 ] || [ $INSTALL_CDE -ne 0 ] || [ $INSTALL_CDA -ne 0 ] || [ $INSTALL_CGG -ne 0 ] || [ $INSTALL_CFR -ne 0 ] || [ $INSTALL_SPARKL -ne 0 ] || [ $INSTALL_CDC -ne 0 ] || [ $INSTALL_CDV -ne 0 ]  || [ $INSTALL_SAIKU -ne 0 ] || [ $INSTALL_SAIKU_ADHOC -ne 0 ] ||  nothingToDo
+[ $INSTALL_MARKETPLACE -ne 0 ] || [ $INSTALL_CDF -ne 0 ] || [ $INSTALL_CDE -ne 0 ] || [ $INSTALL_CDA -ne 0 ] || [ $INSTALL_CGG -ne 0 ] || [ $INSTALL_CFR -ne 0 ] || [ $INSTALL_SPARKL -ne 0 ] || [ $INSTALL_CDC -ne 0 ] || [ $INSTALL_CDV -ne 0 ]  || [ $INSTALL_SAIKU -ne 0 ] || [ $INSTALL_SAIKU_ADHOC -ne 0 ] || [ $INSTALL_SAIKU_CHART_PLUS -ne 0 ] ||  nothingToDo
 
 
 # downloading files
@@ -893,7 +928,7 @@ echo
 ([ $BRANCH != 'dev' ]  && [ $BASERVER_VERSION = '5x' ] ) || [ $INSTALL_CDV -eq 0 ] || downloadCDV
 [ $BASERVER_VERSION = '4x' ] || [ $INSTALL_SAIKU -eq 0 ] || downloadSaiku
 [ $BASERVER_VERSION = '5x' ] || [ $INSTALL_SAIKU_ADHOC -eq 0 ] || downloadSaikuAdhoc
-
+[ $BASERVER_VERSION = '5x' ] || [ $INSTALL_SAIKU_CHART_PLUS -eq 0 ] || downloadSaikuChartPlus
 
 # installing files
 
@@ -912,6 +947,7 @@ echo
 ([ $BRANCH != 'dev' ]  && [ $BASERVER_VERSION = '5x' ] ) || [ $INSTALL_CDV -eq 0 ] || installCDV
 [ $BASERVER_VERSION = '4x' ] || [ $INSTALL_SAIKU -eq 0 ] || installSaiku
 [ $BASERVER_VERSION = '5x' ] || [ $INSTALL_SAIKU_ADHOC -eq 0 ] || installSaikuAdhoc
+[ $BASERVER_VERSION = '5x' ] || [ $INSTALL_SAIKU_CHART_PLUS -eq 0 ] || installSaikuChartPlus
 
 
 
