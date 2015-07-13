@@ -497,10 +497,12 @@ downloadSaikuChartPlus (){
 	if [[ "$BASERVER_VERSION" = "5x" ]]; then
 		if [ $BRANCH = 'dev' ]
 		then
-			URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+			#URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+			URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
 			download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-plugin.zip" ".tmp"
 		else
-			URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+			#URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+			URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
 			download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-plugin.zip" ".tmp"
 		fi
 	else
@@ -508,7 +510,8 @@ downloadSaikuChartPlus (){
 		then
             echo 'SAIKU [trunk] not available for download. downloading stable'
         fi	    
-        URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+	#URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+	URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
 			download_file "SAIKU_CHART_PLUS" "$URL" "saiku-chart-plus-plugin.zip" ".tmp"
 	fi
 	echo "Done"
