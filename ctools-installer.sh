@@ -1,7 +1,7 @@
 #!/bin/bash
 
 INSTALLER=`basename "$0"`
-VER='1.48'
+VER='1.49'
 
 echo
 echo CTOOLS
@@ -15,6 +15,7 @@ echo
 echo
 echo Changelog:
 echo
+echo v1.49 - Add Saiku Chart Plus
 echo v1.48 - Saiku plugin 3.1.8, marketplace 5.2-SNAPSHOT, check broken download urls
 echo v1.47 - Removed CDB installation
 echo v1.46 - Added stable versions for Pentaho 5
@@ -493,25 +494,29 @@ downloadSaikuAdhoc (){
 
 
 downloadSaikuChartPlus (){
+
+echo "Donwload Saiku Chart Plus"
+
 	# SaikuChartPlus by IT4biz
-	if [[ "$BASERVER_VERSION" = "5x" ]]; then
+	if [[ "$BASERVER_VERSION" = "4x" ]]; then
 		if [ $BRANCH = 'dev' ]
 		then
-			#URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
-			URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
+			URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+			#URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
 			download_file "SAIKU_CHART_PLUS" "$URL" "vSaiku3-ChartPlusStable.zip" ".tmp"
 		else
-			#URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
-			URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
+			URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+			#URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
 			download_file "SAIKU_CHART_PLUS" "$URL" "vSaiku3-ChartPlusStable.zip" ".tmp"
 		fi
 	else
 		if [ $BRANCH = 'dev' ]
 		then
             echo 'SAIKU [trunk] not available for download. downloading stable'
-        fi	    
-	#URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
-	URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
+        fi
+
+	URL='http://sourceforge.net/projects/saikuchartplus/files/SaikuChartPlus3/saiku-chart-plus-vSaiku3-plugin-pentaho.zip/download'
+	#URL='https://github.com/it4biz/SaikuChartPlus/archive/vSaiku3-ChartPlusStable.zip'
 			download_file "SAIKU_CHART_PLUS" "$URL" "vSaiku3-ChartPlusStable.zip" ".tmp"
 	fi
 	echo "Done"
@@ -678,9 +683,10 @@ installSaikuAdhoc (){
 
 installSaikuChartPlus (){
 	rm -rf $SOLUTION_DIR/system/saiku-chart-plus
-	mkdir $SOLUTION_DIR/caio
 	unzip -o .tmp/vSaiku3-ChartPlusStable*zip -d "$SOLUTION_DIR/system/" > /dev/null
+	#unzip -o .tmp/vSaiku3-ChartPlusStable*zip -d "$SOLUTION_DIR/system/"
 }
+
 
 
 # read options for stuff to download/install
@@ -942,7 +948,7 @@ echo
 ([ $BRANCH != 'dev' ]  && [ $BASERVER_VERSION = '5x' ] ) || [ $INSTALL_CDV -eq 0 ] || downloadCDV
 [ $BASERVER_VERSION = '4x' ] || [ $INSTALL_SAIKU -eq 0 ] || downloadSaiku
 [ $BASERVER_VERSION = '5x' ] || [ $INSTALL_SAIKU_ADHOC -eq 0 ] || downloadSaikuAdhoc
-[ $BASERVER_VERSION = '5x' ] || [ $INSTALL_SAIKU_CHART_PLUS -eq 0 ] || downloadSaikuChartPlus
+[ $BASERVER_VERSION = '4x' ] || [ $INSTALL_SAIKU_CHART_PLUS -eq 0 ] || downloadSaikuChartPlus
 
 # installing files
 
@@ -961,7 +967,7 @@ echo
 ([ $BRANCH != 'dev' ]  && [ $BASERVER_VERSION = '5x' ] ) || [ $INSTALL_CDV -eq 0 ] || installCDV
 [ $BASERVER_VERSION = '4x' ] || [ $INSTALL_SAIKU -eq 0 ] || installSaiku
 [ $BASERVER_VERSION = '5x' ] || [ $INSTALL_SAIKU_ADHOC -eq 0 ] || installSaikuAdhoc
-[ $BASERVER_VERSION = '5x' ] || [ $INSTALL_SAIKU_CHART_PLUS -eq 0 ] || installSaikuChartPlus
+[ $BASERVER_VERSION = '4x' ] || [ $INSTALL_SAIKU_CHART_PLUS -eq 0 ] || installSaikuChartPlus
 
 
 
